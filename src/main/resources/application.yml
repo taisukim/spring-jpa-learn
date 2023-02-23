@@ -8,7 +8,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
     properties:
       hibernate:
         show_sql: true
@@ -17,6 +17,12 @@ spring:
   h2:
     console:
       enabled: true
+  thymeleaf:
+  # thymeleaf 참조 경로
+    prefix: classpath:/templates/
+    suffix: .html
+  # thymeleaf에 대한 캐시를 남기지 않는다. cache=false 설정(운영시는 true)
+    cache: false
 
 logging:
   level:

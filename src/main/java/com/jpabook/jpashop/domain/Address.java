@@ -1,4 +1,4 @@
-package com.jpabook.jpashop.runner.domain;
+package com.jpabook.jpashop.domain;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

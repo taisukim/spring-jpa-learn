@@ -15,14 +15,10 @@ import java.sql.Connection;
 @Slf4j
 public class CustomRunner implements ApplicationRunner {
 
-    private final JdbcTemplate jdbcTemplate;
-
-    private final DataSource dataSource;
-
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        try(Connection connection = dataSource.getConnection()){
-            log.info(connection.getMetaData().getURL());
-        }
+//        try(Connection connection = dataSource.getConnection()){
+//            log.info(connection.getMetaData().getURL());
+//        }
     }
 }

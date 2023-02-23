@@ -1,24 +1,27 @@
 package com.jpabook.jpashop.controller.form.itemForm;
 
-import com.jpabook.jpashop.controller.form.itemForm.ItemForm;
-import com.jpabook.jpashop.domain.item.Book;
+import com.jpabook.jpashop.domain.item.Movie;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter
 @NoArgsConstructor
-public class BookForm extends ItemForm {
+public class MovieForm extends ItemForm {
 
-    private String author;
-    private String isbn;
+    private String director;
+    private String actor;
 
-    public BookForm(Book book) {
-        this.setId(book.getId());
-        this.setName(book.getName());
-        this.setPrice(book.getPrice());
-        this.setStockQuantity(book.getStockQuantity());
-        this.author = book.getAuthor();
-        this.isbn = book.getIsbn();
+    public MovieForm(Movie movie) {
+        super(movie);
+        this.director = movie.getDirector();
+        this.actor = movie.getActor();
     }
+
+    public MovieForm(FindItemForm form) {
+        super(form);
+        this.director = form.getDirector();
+        this.actor = form.getActor();
+    }
+
 }

@@ -1,18 +1,19 @@
-package com.jpabook.jpashop.runner.repository;
+package com.jpabook.jpashop.repository;
 
-import com.jpabook.jpashop.runner.domain.Member;
+import com.jpabook.jpashop.domain.Member;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
+@RequiredArgsConstructor
 public class MemberRepository {
 
-    @PersistenceContext
-    private EntityManager em;
+    private final EntityManager em;
 
+    //TODO Member 도 나중에 그 수정용으로 merge 를 하나 조건문에 만들어야 할듯
     public void save(Member member){
         em.persist(member);
     }

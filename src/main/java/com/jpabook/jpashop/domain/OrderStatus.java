@@ -1,5 +1,6 @@
-package com.jpabook.jpashop.runner.domain;
+package com.jpabook.jpashop.domain;
 
 public enum OrderStatus {
-    DOING, CANCEL, READY
+    ORDER
+    ,CANCEL;
 }
