@@ -1,5 +1,6 @@
-package com.jpabook.jpashop.dto.request;
+package com.jpabook.jpashop.dto.request.member;
 
+import com.jpabook.jpashop.dto.request.AddressRequest;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,7 +12,7 @@ public class SignupRequest {
 
     @NotBlank
     private String name;
-    private String city;
-    private String street;
-    private String zipcode;
+
+    private AddressRequest address;
+
 }

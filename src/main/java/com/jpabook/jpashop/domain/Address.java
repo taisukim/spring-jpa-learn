@@ -1,2 +1,26 @@
-package com.jpabook.jpashop.domain;public class Address {
+package com.jpabook.jpashop.domain;
+
+import com.jpabook.jpashop.dto.request.member.SignupRequest;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.Embeddable;
+
+@Getter
+@Embeddable
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class Address {
+
+    private String city;
+    private String street;
+    private String zipcode;
+
+    protected Address(SignupRequest signupRequest) {
+        this.city = signupRequest.getAddress().getCity();
+        this.street = signupRequest.getAddress().getStreet();
+        this.zipcode = signupRequest.getAddress().getZipcode();
+    }
+
 }
