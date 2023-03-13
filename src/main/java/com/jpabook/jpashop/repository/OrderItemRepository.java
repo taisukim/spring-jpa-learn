@@ -22,4 +22,9 @@ public class OrderItemRepository {
             em.persist(orderItem);
         }
     }
+
+    public List<OrderItem> findAll() {
+        return em.createQuery("select o from OrderItem o ", OrderItem.class)
+                .getResultList();
+    }
 }

@@ -12,7 +12,6 @@ import java.util.List;
 @Getter
 @Table(name = "orders")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@ToString
 public class Order {
 
     @Id @GeneratedValue
@@ -43,7 +42,14 @@ public class Order {
 
     public static Order createOrder(Member member) {
         return new Order(member);
+    }
 
+    public void addOrderItem(OrderItem orderItem) {
+        this.orderItems.add(orderItem);
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
     }
 
 

@@ -1,5 +1,6 @@
 package com.jpabook.jpashop.domain;
 
+import com.jpabook.jpashop.dto.request.AddressRequest;
 import com.jpabook.jpashop.dto.request.member.SignupRequest;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -21,6 +22,12 @@ public class Address {
         this.city = signupRequest.getAddress().getCity();
         this.street = signupRequest.getAddress().getStreet();
         this.zipcode = signupRequest.getAddress().getZipcode();
+    }
+
+    public Address(AddressRequest addressRequest) {
+        this.zipcode = addressRequest.getZipcode();
+        this.street = addressRequest.getStreet();
+        this.city = addressRequest.getCity();
     }
 
 }

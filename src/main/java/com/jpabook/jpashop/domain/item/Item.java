@@ -1,6 +1,8 @@
 package com.jpabook.jpashop.domain.item;
 
 import com.jpabook.jpashop.domain.Category;
+import com.jpabook.jpashop.dto.request.order.CreateOrderItemRequest;
+import com.jpabook.jpashop.exception.NotEnoughStockException;
 import lombok.*;
 
 import javax.persistence.*;
@@ -39,7 +41,12 @@ public abstract class Item {
     }
 
 
-
-
-
+    public int countCheck(int quantity) {
+        int count = this.stockQuantity - quantity;
+        if (count < 0 ) {
+            throw new NotEnoughStockException("구매수량이 재고수량을 초과합니다.");
+        }
+        this.stockQuantity = count;
+        return quantity;
+    }
 }

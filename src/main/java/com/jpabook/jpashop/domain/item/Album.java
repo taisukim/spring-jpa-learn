@@ -1,5 +1,6 @@
 package com.jpabook.jpashop.domain.item;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,7 +12,7 @@ import javax.persistence.Entity;
 @DiscriminatorValue("A")
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Album extends Item{
 
     private String artist;
