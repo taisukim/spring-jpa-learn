@@ -1,10 +1,7 @@
 package com.jpabook.jpashop.domain.item;
 
 import com.jpabook.jpashop.domain.Category;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -18,12 +15,15 @@ import java.util.List;
 //discriminator = 판별기
 @DiscriminatorColumn(name = "dtype")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 public abstract class Item {
 
     @Id
     @GeneratedValue
     @Column(name = "item_id")
     private Long id;
+
+    @Column(unique = true)
     private String name;
 //    private String itemType;
     private int price;

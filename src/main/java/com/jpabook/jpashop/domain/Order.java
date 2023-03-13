@@ -1,5 +1,6 @@
 package com.jpabook.jpashop.domain;
 
+import com.jpabook.jpashop.domain.item.Item;
 import lombok.*;
 
 import javax.persistence.*;
@@ -33,6 +34,17 @@ public class Order {
 
     @Enumerated
     private OrderStatus status;
+
+    private Order(Member member) {
+        this.member = member;
+        this.orderDate = LocalDateTime.now();
+        this.status = OrderStatus.ORDER;
+    }
+
+    public static Order createOrder(Member member) {
+        return new Order(member);
+
+    }
 
 
 //    //TODO delete

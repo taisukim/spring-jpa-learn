@@ -18,8 +18,8 @@ public class OrderApiController {
 
     private final OrderService orderService;
 
-//    @PostMapping("/order")
-//    public OrderResponse order(CreateOrderRequest request) {
-//        return orderService.order(request);
-//    }
+    @PostMapping("/order")
+    public OrderResponse order(CreateOrderRequest request) {
+        return orderService.order(request);
+    }
 }

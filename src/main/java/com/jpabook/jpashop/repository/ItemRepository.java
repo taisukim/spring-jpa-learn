@@ -17,8 +17,13 @@ public class ItemRepository {
     private final EntityManager em;
 
     public void save(Item item) {
-
         em.persist(item);
+    }
+
+    public void saveAll(List<Item> items) {
+        for (Item item : items) {
+            em.persist(item);
+        }
     }
 
     public List<Item> findAll() {
@@ -36,5 +41,11 @@ public class ItemRepository {
                         .setParameter("name", name)
                         .getSingleResult()
         );
+    }
+
+    public List<Item> findList(List<Long> idList) {
+        return em.createQuery("select i from Item i where i.id in (:idList) ", Item.class)
+                .setParameter("idList", idList)
+                .getResultList();
     }
 }

@@ -1,6 +1,7 @@
 package com.jpabook.jpashop.repository;
 
 import com.jpabook.jpashop.domain.item.Album;
+import com.jpabook.jpashop.domain.item.Book;
 import com.jpabook.jpashop.domain.item.Item;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -10,8 +11,9 @@ import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NonUniqueResultException;
-import java.util.Optional;
+import java.util.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @SpringBootTest
@@ -67,6 +69,52 @@ class ItemRepositoryTest {
             album = existItem.get();
         }
         System.out.println(album.getName());
+
+    }
+
+    @Test
+    @Transactional
+    void checkFindList() {
+        Item album = Album.createAlbum("album", 1000, 10, "taesoo", "ect");
+        Item book = Book.createBook("book", 1000, 10, "taesoo", "ect");
+        itemRepository.save(album);
+        itemRepository.save(book);
+
+        List<Long> idList = new ArrayList<>();
+        idList.add(album.getId());
+        idList.add(book.getId());
+
+        List<Item> itemList = itemRepository.findList(idList);
+        System.out.println(itemList.toString());
+    }
+
+    /**
+     * 아이템 테이블을 불러올때 기준이되는 List 안에 순서대로 불러올수 있는지 확인하는 테스트
+     * mysql 에는 field 라는 함수가 존재해서 가능했지만
+     * h2 에는 field 라는 함수기능이 따로 존재하지않아 힘들것같다
+     */
+    @Test
+    @Transactional
+    void findListSortingTest() {
+        Item item1 = Album.createAlbum("1", 1000, 10, "1", "1");
+        Item item2 = Book.createBook("2", 1000, 10, "2", "2");
+        Item item3 = Album.createAlbum("3", 1000, 10, "3", "3");
+        Item item4 = Book.createBook("4", 1000, 10, "4", "4");
+
+        itemRepository.save(item1);
+        itemRepository.save(item2);
+        itemRepository.save(item3);
+        itemRepository.save(item4);
+
+        List<Long> idList = new ArrayList<>();
+        idList.add(3L);
+        idList.add(2L);
+        idList.add(1L);
+        idList.add(4L);
+        List<Item> list = itemRepository.findList(idList);
+
+        System.out.println(idList);
+        System.out.println(list);
 
     }
 }

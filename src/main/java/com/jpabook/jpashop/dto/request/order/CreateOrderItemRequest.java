@@ -7,6 +7,5 @@ import lombok.Setter;
 @Setter
 public class CreateOrderItemRequest {
     private Long itemId;
-    private int stockQuantity;
     private int count;
 }
