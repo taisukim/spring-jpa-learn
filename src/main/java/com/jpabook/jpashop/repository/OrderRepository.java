@@ -1,6 +1,7 @@
 package com.jpabook.jpashop.repository;
 
 import com.jpabook.jpashop.domain.Order;
+import com.jpabook.jpashop.dto.response.order.SimpleOrderDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -113,4 +114,20 @@ public class OrderRepository {
                 .getResultList();
     }
 
+    public List<Order> fetchJoin() {
+        return em.createQuery("select o from Order o " +
+                        "join fetch o.member " +
+                        "join fetch o.delivery", Order.class)
+                .getResultList();
+    }
+
+    public List<SimpleOrderDto> fetchJoinFinal() {
+        return em.createQuery(
+        "select new com.jpabook.jpashop.dto.response.order.SimpleOrderDto(o.id, m.name, o.orderDate, o.status, d.address) " +
+                "from Order o " +
+                "join o.member m " +
+                "join o.delivery d ", SimpleOrderDto.class)
+                .getResultList();
+
+    }
 }
