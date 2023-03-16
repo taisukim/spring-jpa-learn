@@ -6,7 +6,6 @@ import com.jpabook.jpashop.dto.response.order.SimpleOrderDto;
 import com.jpabook.jpashop.repository.OrderRepository;
 import com.jpabook.jpashop.repository.OrderSearch;
 import lombok.RequiredArgsConstructor;
-import org.apache.naming.factory.ResourceLinkFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,7 +46,7 @@ public class OrderSimpleApiController {
 
     @GetMapping("/v2/simple-orders")
     public List<SimpleOrderDto> ordersV2() {
-        List<Order> orders = orderRepository.solveByJpql(new OrderSearch());
+        List<Order> orders = orderRepository.findAllDsl(new OrderSearch());
         return orders.stream().map(SimpleOrderDto::new)
         .collect(Collectors.toList());
 
@@ -55,14 +54,14 @@ public class OrderSimpleApiController {
 
     @GetMapping("/v3/simple-orders")
     public Result<List<SimpleOrderDto>> orderV3() {
-        List<Order> orders = orderRepository.fetchJoin();
+        List<Order> orders = orderRepository.orderFetchJoin();
         List<SimpleOrderDto> collect = orders.stream().map(SimpleOrderDto::new).collect(Collectors.toList());
         return new Result<>(collect);
     }
 
     @GetMapping("/v4/simple-orders")
     public Result<List<SimpleOrderDto>> orderV4() {
-        List<SimpleOrderDto> orderDtos = orderRepository.fetchJoinFinal();
+        List<SimpleOrderDto> orderDtos = orderRepository.orderFetchJoinFinal();
         return new Result<>(orderDtos);
 
     }

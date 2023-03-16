@@ -1,8 +1,18 @@
+//query dsl setting
+buildscript {
+	dependencies {
+		classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:1.0.10")
+	}
+}
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '2.7.8'
 	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
 }
+
+//query dsl setting
+apply plugin: "com.ewerk.gradle.plugins.querydsl"
 
 group = 'com.jpabook'
 version = '0.0.1-SNAPSHOT'
@@ -23,6 +33,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 
+//query dsl setting
+	implementation 'com.querydsl:querydsl-jpa'
+	implementation 'com.querydsl:querydsl-apt'
+
 //	로그에 출력되는 쿼리문의 파라미터를 출력해주는 의존성
 	implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.5.6'
 //	Template 폴더안에 내용을 서버를 재실행하지않고 상위메뉴 build 에 서 3번째꺼였나 를 클릭하면 그냥 나온다
@@ -38,3 +52,29 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+//query dsl setting
+def querydslDir = 'src/main/generated'
+
+querydsl {
+	library = "com.querydsl:querydsl-apt"
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+
+sourceSets {
+	main {
+		java {
+			srcDirs = ['src/main/java', querydslDir]
+		}
+	}
+}
+
+compileQuerydsl{
+	options.annotationProcessorPath = configurations.querydsl
+}
+
+configurations {
+	querydsl.extendsFrom compileClasspath
+}
+//query dsl setting 여기까지
