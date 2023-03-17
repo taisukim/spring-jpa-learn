@@ -1,5 +1,7 @@
 package com.jpabook.jpashop.domain.item;
 
+import com.jpabook.jpashop.dto.request.item.ItemRequest;
+import com.jpabook.jpashop.dto.response.item.ItemResponse;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +26,17 @@ public class Album extends Item{
         this.ect = ect;
     }
 
+    private Album(ItemRequest itemRequest) {
+        super(itemRequest);
+        this.artist = itemRequest.getArtist();
+        this.ect = itemRequest.getEct();
+    }
+
     public static Item createAlbum(String name, int price, int stockQuantity, String artist, String ect){
         return new Album(name, price, stockQuantity, artist, ect);
+    }
+
+    public static Item createAlbum(ItemRequest itemRequest) {
+        return new Album(itemRequest);
     }
 }

@@ -16,8 +16,9 @@ public class ItemRepository {
 
     private final EntityManager em;
 
-    public void save(Item item) {
+    public Long save(Item item) {
         em.persist(item);
+        return item.getId();
     }
 
     public void saveAll(List<Item> items) {

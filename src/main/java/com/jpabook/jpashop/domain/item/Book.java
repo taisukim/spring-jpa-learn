@@ -1,5 +1,6 @@
 package com.jpabook.jpashop.domain.item;
 
+import com.jpabook.jpashop.dto.request.item.ItemRequest;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,8 +23,18 @@ public class Book extends Item{
         this.isbn = isbn;
     }
 
+    private Book(ItemRequest itemRequest) {
+        super(itemRequest);
+        this.author = itemRequest.getAuthor();
+        this.isbn = itemRequest.getIsbn();
+    }
+
     public static Item createBook(String name, int price, int stockQuantity, String author, String isbn){
         return new Book(name, price, stockQuantity, author, isbn);
+    }
+
+    public static Item createBook(ItemRequest itemRequest) {
+        return new Book(itemRequest);
     }
 
 }
