@@ -1,9 +1,13 @@
 package com.jpabook.jpashop.runner;
 
 
+import com.jpabook.jpashop.domain.Member;
+import com.jpabook.jpashop.domain.Order;
 import com.jpabook.jpashop.domain.item.Album;
 import com.jpabook.jpashop.domain.item.Book;
 import com.jpabook.jpashop.domain.item.Item;
+import com.jpabook.jpashop.dto.request.AddressRequest;
+import com.jpabook.jpashop.dto.request.member.SignupRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -35,6 +39,16 @@ public class CustomRunner implements ApplicationRunner {
         em.persist(album2);
         em.persist(book1);
         em.persist(book2);
+        SignupRequest signupRequest = new SignupRequest("taesoo");
+        AddressRequest addressRequest = new AddressRequest();
+        addressRequest.setZipcode("13");
+        addressRequest.setCity("anyang");
+        addressRequest.setStreet("street");
+        signupRequest.setAddress(addressRequest);
+        Member member = Member.createMember(signupRequest);
+        em.persist(member);
+        Order order = Order.createOrder(member);
+        em.persist(order);
     }
 
 

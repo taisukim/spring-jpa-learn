@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public abstract class AddressRequest {
+public class AddressRequest {
     private String city;
     private String street;
     private String zipcode;

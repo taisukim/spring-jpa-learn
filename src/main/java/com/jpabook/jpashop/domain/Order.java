@@ -31,7 +31,7 @@ public class Order {
 
     private LocalDateTime orderDate;
 
-    @Enumerated
+    @Enumerated(value = EnumType.STRING)
     private OrderStatus status;
 
     private Order(Member member) {
