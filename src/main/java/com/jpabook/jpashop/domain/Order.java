@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,6 +51,12 @@ public class Order {
 
     public void setDelivery(Delivery delivery) {
         this.delivery = delivery;
+    }
+
+    @PrePersist
+    @PreUpdate
+    public void onPersist(){
+        orderDate = orderDate.truncatedTo(ChronoUnit.SECONDS);
     }
 
 

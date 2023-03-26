@@ -5,15 +5,19 @@ import com.jpabook.jpashop.domain.Member;
 import com.jpabook.jpashop.domain.Order;
 import com.jpabook.jpashop.domain.OrderItem;
 import com.jpabook.jpashop.domain.item.Item;
+import com.jpabook.jpashop.dto.Result;
 import com.jpabook.jpashop.dto.request.order.CreateOrderRequest;
+import com.jpabook.jpashop.dto.request.order.ReadOrderRequest;
 import com.jpabook.jpashop.dto.response.order.OrderResponse;
 import com.jpabook.jpashop.repository.*;
+import com.jpabook.jpashop.repository.query.order.OrderQueryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +26,7 @@ import java.util.List;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final OrderQueryRepository orderQueryRepository;
     private final MemberRepository memberRepository;
     private final ItemRepository itemRepository;
     private final OrderItemRepository orderItemRepository;
@@ -45,4 +50,22 @@ public class OrderService {
         return new OrderResponse();
 
     }
+
+    public Result<List<OrderResponse>> findOrders(ReadOrderRequest request) {
+        List<Order> orders = orderQueryRepository.findByMemberAndOrderAndItem(request);
+        List<OrderResponse> orderResponses = orders.stream().map(OrderResponse::new).collect(Collectors.toList());
+        return new Result<>(orderResponses);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
