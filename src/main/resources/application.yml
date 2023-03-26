@@ -11,6 +11,8 @@ spring:
     properties:
       hibernate:
         show_sql: true
+        default_batch_fetch_size: 1000
+        format_sql: true
 
 #p6spy 설정
 decorator:

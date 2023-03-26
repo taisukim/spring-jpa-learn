@@ -7,9 +7,9 @@ import com.jpabook.jpashop.dto.response.order.OrderResponse;
 import com.jpabook.jpashop.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,14 +27,22 @@ public class OrderApiController {
 
     @GetMapping("/order")
     public Result<List<OrderResponse>> findOrder(@RequestParam Long memberId
-    , @RequestParam(required = false) Long orderId
-    , @RequestParam(required = false) String itemName) {
+            , @RequestParam(required = false) Long orderId
+            , @RequestParam(required = false) String itemName
+            , @RequestParam(defaultValue = "0") int page
+            , @RequestParam(defaultValue = "20") int size) {
         ReadOrderRequest request = ReadOrderRequest.builder()
                 .memberId(memberId)
                 .orderId(orderId)
                 .itemName(itemName)
                 .build();
+        PageRequest pageRequest = PageRequest.of(page, size);
 
-        return orderService.findOrders(request);
+        return orderService.findOrders(request, pageRequest);
+    }
+
+    @GetMapping("/all")
+    public Result<List<OrderResponse>> findAllOrder() {
+        return orderService.findAll();
     }
 }

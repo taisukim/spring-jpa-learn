@@ -13,6 +13,7 @@ import com.jpabook.jpashop.repository.*;
 import com.jpabook.jpashop.repository.query.order.OrderQueryRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,8 +52,14 @@ public class OrderService {
 
     }
 
-    public Result<List<OrderResponse>> findOrders(ReadOrderRequest request) {
-        List<Order> orders = orderQueryRepository.findByMemberAndOrderAndItem(request);
+    public Result<List<OrderResponse>> findOrders(ReadOrderRequest request, PageRequest pageRequest) {
+        List<Order> orders = orderQueryRepository.findByMemberAndOrderAndItem(request, pageRequest);
+        List<OrderResponse> orderResponses = orders.stream().map(OrderResponse::new).collect(Collectors.toList());
+        return new Result<>(orderResponses);
+    }
+
+    public Result<List<OrderResponse>> findAll() {
+        List<Order> orders = orderRepository.findAll();
         List<OrderResponse> orderResponses = orders.stream().map(OrderResponse::new).collect(Collectors.toList());
         return new Result<>(orderResponses);
     }

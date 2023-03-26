@@ -29,33 +29,14 @@ public class CustomRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        Member member = createMember();
         for (int i = 1; i < 31; i++) {
-            addItem(i);
+            addItem(i, member);
         }
     }
 
-//    private void init1() {
-//        Item album1 = Album.createAlbum("album1", 10000, 100, "artist1", "ect1");
-//        Item album2 = Album.createAlbum("album2", 20000, 200, "artist2", "ect2");
-//        Item book1 = Book.createBook("book1", 30000, 300, "author1", "isbn1");
-//        Item book2 = Book.createBook("book2", 40000, 400, "author2", "isbn2");
-//        em.persist(album1);
-//        em.persist(album2);
-//        em.persist(book1);
-//        em.persist(book2);
-//        SignupRequest signupRequest = new SignupRequest("taesoo");
-//        AddressRequest addressRequest = new AddressRequest();
-//        addressRequest.setZipcode("13");
-//        addressRequest.setCity("anyang");
-//        addressRequest.setStreet("street");
-//        signupRequest.setAddress(addressRequest);
-//        Member member = Member.createMember(signupRequest);
-//        em.persist(member);
-//        Order order = Order.createOrder(member);
-//        em.persist(order);
-//    }
 
-    private void addItem(int num) {
+    private void addItem(int num, Member member) {
         Item album = Album.createAlbum("album" + num, num * 100, num * 10, "artist" + num, "ect" + num);
         em.persist(album);
         Item book = Book.createBook("book" + num, num * 100, num * 10, "artist" + num, "ect" + num);
@@ -63,14 +44,6 @@ public class CustomRunner implements ApplicationRunner {
         List<Item> items = new ArrayList<>();
         items.add(album);
         items.add(book);
-        SignupRequest signupRequest = new SignupRequest("member" + num);
-        AddressRequest addressRequest = new AddressRequest();
-        addressRequest.setZipcode("zipcode" + num);
-        addressRequest.setCity("city" + num);
-        addressRequest.setStreet("street" + num);
-        signupRequest.setAddress(addressRequest);
-        Member member = Member.createMember(signupRequest);
-        em.persist(member);
         Order order = Order.createOrder(member);
         em.persist(order);
         List<CreateOrderItemRequest> coirList = new ArrayList<>();
@@ -80,6 +53,18 @@ public class CustomRunner implements ApplicationRunner {
         for (OrderItem oi : orderItem) {
             em.persist(oi);
         }
+    }
+
+    private Member createMember() {
+        SignupRequest signupRequest = new SignupRequest("member");
+        AddressRequest addressRequest = new AddressRequest();
+        addressRequest.setZipcode("zipcode");
+        addressRequest.setCity("city");
+        addressRequest.setStreet("street");
+        signupRequest.setAddress(addressRequest);
+        Member member = Member.createMember(signupRequest);
+        em.persist(member);
+        return member;
     }
 
     private CreateOrderItemRequest cc(Item item) {
