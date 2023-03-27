@@ -64,15 +64,3 @@ public class OrderService {
         return new Result<>(orderResponses);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-

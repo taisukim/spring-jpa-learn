@@ -34,9 +34,9 @@ public class ItemService {
 
     @Transactional
     public Result<Long> createItem(ItemRequest itemRequest) {
-        if (itemRequest.getDtype().equals("A")) {
+        if (itemRequest.getDType().equals("A")) {
             return new Result<>(itemRepository.save(Album.createAlbum(itemRequest)));
-        } else if (itemRequest.getDtype().equals("B")) {
+        } else if (itemRequest.getDType().equals("B")) {
             return new Result<>(itemRepository.save(Book.createBook(itemRequest)));
         } else {
             throw new IllegalArgumentException("잘못된 아이템 타입입니다");

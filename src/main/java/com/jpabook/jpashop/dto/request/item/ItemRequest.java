@@ -18,10 +18,10 @@ public class ItemRequest {
     private String name;
     @Min(1)
     private int price;
-    @Min(1)
+    @Min(0)
     private int stockQuantity;
     @NotEmpty
-    private String dtype;
+    private String dType;
 
     //BOOK
     private String author;
