@@ -1,4 +1,8 @@
 spring:
+  config:
+    activate:
+      on-profile: dev
+
   datasource:
     url: jdbc:h2:mem:testdb
     username: sa
@@ -13,6 +17,39 @@ spring:
         show_sql: true
         default_batch_fetch_size: 1000
         format_sql: true
+
+#p6spy 설정
+decorator:
+  datasource:
+    datasource-proxy:
+      multiline: true
+
+logging:
+  level:
+    org.hibernate.sql: debug
+
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+  datasource:
+    url: jdbc:mariadb://mariadb:3306/docker?characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: 1234
+    driver-class-name: org.mariadb.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        show_sql: true
+        default_batch_fetch_size: 1000
+        format_sql: true
+        dialect: org.hibernate.dialect.MariaDB103Dialect
+#    database-platform: org.hibernate.dialect.MariaDB103Dialect
 
 #p6spy 설정
 decorator:

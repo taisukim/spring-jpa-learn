@@ -42,7 +42,7 @@ class OrderServiceTest {
      * member 의 주소와 order 의 delivery 주소가 다르게 설정이 되는지와
      * orderItem 이 잘 생성되는지 확인하기위한 테스트
      */
-    @Test
+    @Test()
     void orderTest() {
         SignupRequest signupRequest = new SignupRequest();
         AddressRequest addressRequest = getAddressRequest("seoul", "sungsoo", "132-133");
